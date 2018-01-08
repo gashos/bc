@@ -1,4 +1,4 @@
-ed math.h <<EOS-EOS
+ed libmath.h <<EOS-EOS
 1,1s/^/"/
 1,\$s/\$/\\\\/
 \$,\$d

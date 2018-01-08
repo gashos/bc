@@ -170,7 +170,7 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 /* scan.l: the (f)lex description file for the scanner. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992, 1993, 1994 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -307,25 +307,25 @@ int yyleng;
 
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 
-#define YY_END_OF_BUFFER 40
+#define YY_END_OF_BUFFER 41
 typedef int yy_state_type;
 static const short int yy_accept[144] =
     {   0,
-        0,    0,   40,   38,   33,   31,   25,   38,   26,   38,
-       22,   26,   22,   22,   38,   26,   37,   29,   27,   29,
-       38,   22,   35,   35,   35,   35,   35,   35,   35,   35,
-       35,   35,   35,   35,   35,   35,   35,   35,   38,   33,
-       29,    0,   36,   27,   23,   30,   37,    0,   34,   37,
-       37,    0,   28,   32,   35,   35,   35,   35,   35,   35,
-       35,   35,   35,    7,   35,   35,   35,   35,   35,   35,
-       35,   35,   35,   35,   35,   24,   37,    0,    0,   37,
-        0,   35,   35,   35,   35,   35,    6,   35,   35,   35,
-       35,   35,   35,   35,   35,   35,   35,   35,   35,   35,
+        0,    0,   41,   39,   34,   32,   26,   39,   27,   39,
+       23,   27,   23,   23,   22,   27,   38,   30,   28,   30,
+       39,   23,   36,   36,   36,   36,   36,   36,   36,   36,
+       36,   36,   36,   36,   36,   36,   36,   36,   39,   34,
+       30,    0,   37,   28,   24,   31,   38,    0,   35,   38,
+       38,    0,   29,   33,   36,   36,   36,   36,   36,   36,
+       36,   36,   36,    7,   36,   36,   36,   36,   36,   36,
+       36,   36,   36,   36,   36,   25,   38,    0,    0,   38,
+        0,   36,   36,   36,   36,   36,    6,   36,   36,   36,
+       36,   36,   36,   36,   36,   36,   36,   36,   36,   36,
 
-       35,   13,   35,   35,   35,   14,   16,   35,   17,   35,
-       35,   35,   35,    3,   15,   35,   35,    9,   35,   35,
-        2,   35,   35,   11,   35,   35,   12,   20,   35,   10,
-       35,    8,   35,    1,    4,   21,    5,   35,   35,   35,
+       36,   13,   36,   36,   36,   14,   16,   36,   17,   36,
+       36,   36,   36,    3,   15,   36,   36,    9,   36,   36,
+        2,   36,   36,   11,   36,   36,   12,   20,   36,   10,
+       36,    8,   36,    1,    4,   21,    5,   36,   36,   36,
        19,   18,    0
     } ;
 
@@ -683,31 +683,41 @@ return(Limits);
 	YY_BREAK
 case 22:
 # line 82 "scan.l"
+{
+#ifdef DOT_IS_LAST
+       return(Last);
+#else
+       yyerror ("illegal character: %s",yytext);
+#endif
+    }
+	YY_BREAK
+case 23:
+# line 89 "scan.l"
 { yylval.c_value = yytext[0]; 
 					      return((int)yytext[0]); }
 	YY_BREAK
-case 23:
-# line 84 "scan.l"
+case 24:
+# line 91 "scan.l"
 { return(AND); }
 	YY_BREAK
-case 24:
-# line 85 "scan.l"
+case 25:
+# line 92 "scan.l"
 { return(OR); }
 	YY_BREAK
-case 25:
-# line 86 "scan.l"
+case 26:
+# line 93 "scan.l"
 { return(NOT); }
 	YY_BREAK
-case 26:
-# line 87 "scan.l"
+case 27:
+# line 94 "scan.l"
 { yylval.c_value = yytext[0]; return(MUL_OP); }
 	YY_BREAK
-case 27:
-# line 88 "scan.l"
+case 28:
+# line 95 "scan.l"
 { yylval.c_value = yytext[0]; return(ASSIGN_OP); }
 	YY_BREAK
-case 28:
-# line 89 "scan.l"
+case 29:
+# line 96 "scan.l"
 { 
 #ifdef OLD_EQ_OP
 			 char warn_save;
@@ -723,28 +733,28 @@ case 28:
 			 return(ASSIGN_OP);
 		       }
 	YY_BREAK
-case 29:
-# line 103 "scan.l"
+case 30:
+# line 110 "scan.l"
 { yylval.s_value = strcopyof(yytext); return(REL_OP); }
 	YY_BREAK
-case 30:
-# line 104 "scan.l"
+case 31:
+# line 111 "scan.l"
 { yylval.c_value = yytext[0]; return(INCR_DECR); }
 	YY_BREAK
-case 31:
-# line 105 "scan.l"
+case 32:
+# line 112 "scan.l"
 { line_no++; return(NEWLINE); }
 	YY_BREAK
-case 32:
-# line 106 "scan.l"
+case 33:
+# line 113 "scan.l"
 {  line_no++;  /* ignore a "quoted" newline */ }
 	YY_BREAK
-case 33:
-# line 107 "scan.l"
+case 34:
+# line 114 "scan.l"
 { /* ignore spaces and tabs */ }
 	YY_BREAK
-case 34:
-# line 108 "scan.l"
+case 35:
+# line 115 "scan.l"
 {
 	int c;
 
@@ -767,12 +777,12 @@ case 34:
 	  }
       }
 	YY_BREAK
-case 35:
-# line 129 "scan.l"
+case 36:
+# line 136 "scan.l"
 { yylval.s_value = strcopyof(yytext); return(NAME); }
 	YY_BREAK
-case 36:
-# line 130 "scan.l"
+case 37:
+# line 137 "scan.l"
 {
  	      unsigned char *look;
 	      int count = 0;
@@ -786,8 +796,8 @@ case 36:
 	      return(STRING);
 	    }
 	YY_BREAK
-case 37:
-# line 142 "scan.l"
+case 38:
+# line 149 "scan.l"
 {
 	      unsigned char *src, *dst;
 	      int len;
@@ -816,8 +826,8 @@ case 37:
 	      return(NUMBER);
 	    }
 	YY_BREAK
-case 38:
-# line 169 "scan.l"
+case 39:
+# line 176 "scan.l"
 {
 	  if (yytext[0] < ' ')
 	    yyerror ("illegal character: ^%c",yytext[0] + '@');
@@ -828,8 +838,8 @@ case 38:
 	      yyerror ("illegal character: %s",yytext);
 	}
 	YY_BREAK
-case 39:
-# line 178 "scan.l"
+case 40:
+# line 185 "scan.l"
 ECHO;
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
@@ -1353,7 +1363,7 @@ FILE *file;
 
     b->yy_eof_status = EOF_NOT_SEEN;
     }
-# line 178 "scan.l"
+# line 185 "scan.l"
 
 
 
