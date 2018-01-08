@@ -7,7 +7,7 @@ static char yysccsid[] = "@(#)yaccpar	1.8 (Berkeley) 01/20/90";
          extensions to the language. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -684,7 +684,7 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 108 "bc.y"
+#line 106 "bc.y"
 {
 			      yyval.i_value = 0;
 			      if (interactive)
@@ -695,42 +695,42 @@ case 1:
 			    }
 break;
 case 3:
-#line 119 "bc.y"
+#line 117 "bc.y"
 { run_code (); }
 break;
 case 4:
-#line 121 "bc.y"
+#line 119 "bc.y"
 { run_code (); }
 break;
 case 5:
-#line 123 "bc.y"
+#line 121 "bc.y"
 {
 			      yyerrok;
 			      init_gen ();
 			    }
 break;
 case 6:
-#line 129 "bc.y"
+#line 127 "bc.y"
 { yyval.i_value = 0; }
 break;
 case 10:
-#line 135 "bc.y"
+#line 133 "bc.y"
 { yyval.i_value = 0; }
 break;
 case 17:
-#line 144 "bc.y"
+#line 142 "bc.y"
 { yyval.i_value = yyvsp[0].i_value; }
 break;
 case 18:
-#line 147 "bc.y"
+#line 145 "bc.y"
 { warranty (""); }
 break;
 case 19:
-#line 149 "bc.y"
+#line 147 "bc.y"
 { limits (); }
 break;
 case 20:
-#line 151 "bc.y"
+#line 149 "bc.y"
 {
 			      if (yyvsp[0].i_value & 2)
 				warn ("comparison in expression");
@@ -741,7 +741,7 @@ case 20:
 			    }
 break;
 case 21:
-#line 160 "bc.y"
+#line 158 "bc.y"
 {
 			      yyval.i_value = 0;
 			      generate ("w");
@@ -750,7 +750,7 @@ case 21:
 			    }
 break;
 case 22:
-#line 167 "bc.y"
+#line 165 "bc.y"
 {
 			      if (break_label == 0)
 				yyerror ("Break outside a for/while");
@@ -762,7 +762,7 @@ case 22:
 			    }
 break;
 case 23:
-#line 177 "bc.y"
+#line 175 "bc.y"
 {
 			      warn ("Continue statement");
 			      if (continue_label == 0)
@@ -775,30 +775,30 @@ case 23:
 			    }
 break;
 case 24:
-#line 188 "bc.y"
+#line 186 "bc.y"
 { exit (0); }
 break;
 case 25:
-#line 190 "bc.y"
+#line 188 "bc.y"
 { generate ("h"); }
 break;
 case 26:
-#line 192 "bc.y"
+#line 190 "bc.y"
 { generate ("0R"); }
 break;
 case 27:
-#line 194 "bc.y"
+#line 192 "bc.y"
 { generate ("R"); }
 break;
 case 28:
-#line 196 "bc.y"
+#line 194 "bc.y"
 {
 			      yyvsp[0].i_value = break_label; 
 			      break_label = next_label++;
 			    }
 break;
 case 29:
-#line 201 "bc.y"
+#line 199 "bc.y"
 {
 			      if (yyvsp[-1].i_value > 1)
 				warn ("Comparison in first for expression");
@@ -811,7 +811,7 @@ case 29:
 			    }
 break;
 case 30:
-#line 212 "bc.y"
+#line 210 "bc.y"
 {
 			      if (yyvsp[-1].i_value < 0) generate ("1");
 			      yyvsp[-1].i_value = next_label++;
@@ -824,7 +824,7 @@ case 30:
 			    }
 break;
 case 31:
-#line 223 "bc.y"
+#line 221 "bc.y"
 {
 			      if (yyvsp[-1].i_value > 1)
 				warn ("Comparison in third for expression");
@@ -836,7 +836,7 @@ case 31:
 			    }
 break;
 case 32:
-#line 233 "bc.y"
+#line 231 "bc.y"
 {
 			      sprintf (genstr, "J%1d:N%1d:",
 				       continue_label, break_label);
@@ -846,7 +846,7 @@ case 32:
 			    }
 break;
 case 33:
-#line 241 "bc.y"
+#line 239 "bc.y"
 {
 			      yyvsp[-1].i_value = if_label;
 			      if_label = next_label++;
@@ -855,7 +855,7 @@ case 33:
 			    }
 break;
 case 34:
-#line 248 "bc.y"
+#line 246 "bc.y"
 {
 			      sprintf (genstr, "N%1d:", if_label); 
 			      generate (genstr);
@@ -863,7 +863,7 @@ case 34:
 			    }
 break;
 case 35:
-#line 254 "bc.y"
+#line 252 "bc.y"
 {
 			      yyvsp[0].i_value = next_label++;
 			      sprintf (genstr, "N%1d:", yyvsp[0].i_value);
@@ -871,7 +871,7 @@ case 35:
 			    }
 break;
 case 36:
-#line 260 "bc.y"
+#line 258 "bc.y"
 {
 			      yyvsp[0].i_value = break_label; 
 			      break_label = next_label++;
@@ -880,7 +880,7 @@ case 36:
 			    }
 break;
 case 37:
-#line 267 "bc.y"
+#line 265 "bc.y"
 {
 			      sprintf (genstr, "J%1d:N%1d:", yyvsp[-6].i_value, break_label);
 			      generate (genstr);
@@ -888,15 +888,15 @@ case 37:
 			    }
 break;
 case 38:
-#line 273 "bc.y"
+#line 271 "bc.y"
 { yyval.i_value = 0; }
 break;
 case 39:
-#line 275 "bc.y"
+#line 273 "bc.y"
 {  warn ("print statement"); }
 break;
 case 43:
-#line 282 "bc.y"
+#line 280 "bc.y"
 {
 			      generate ("O");
 			      generate (yyvsp[0].s_value);
@@ -904,11 +904,11 @@ case 43:
 			    }
 break;
 case 44:
-#line 288 "bc.y"
+#line 286 "bc.y"
 { generate ("P"); }
 break;
 case 46:
-#line 292 "bc.y"
+#line 290 "bc.y"
 {
 			      warn ("else clause in if statement");
 			      yyvsp[0].i_value = next_label++;
@@ -918,7 +918,7 @@ case 46:
 			    }
 break;
 case 48:
-#line 302 "bc.y"
+#line 300 "bc.y"
 {
 			      /* Check auto list against parameter list? */
 			      check_params (yyvsp[-4].a_value,yyvsp[0].a_value);
@@ -932,57 +932,57 @@ case 48:
 			    }
 break;
 case 49:
-#line 314 "bc.y"
+#line 312 "bc.y"
 {
 			      generate ("0R]");
 			      next_label = yyvsp[-11].i_value;
 			    }
 break;
 case 50:
-#line 320 "bc.y"
+#line 318 "bc.y"
 { yyval.a_value = NULL; }
 break;
 case 52:
-#line 324 "bc.y"
+#line 322 "bc.y"
 { yyval.a_value = NULL; }
 break;
 case 53:
-#line 326 "bc.y"
+#line 324 "bc.y"
 { yyval.a_value = yyvsp[-1].a_value; }
 break;
 case 54:
-#line 328 "bc.y"
+#line 326 "bc.y"
 { yyval.a_value = yyvsp[-1].a_value; }
 break;
 case 55:
-#line 331 "bc.y"
+#line 329 "bc.y"
 { yyval.a_value = nextarg (NULL, lookup (yyvsp[0].s_value,SIMPLE)); }
 break;
 case 56:
-#line 333 "bc.y"
+#line 331 "bc.y"
 { yyval.a_value = nextarg (NULL, lookup (yyvsp[-2].s_value,ARRAY)); }
 break;
 case 57:
-#line 335 "bc.y"
+#line 333 "bc.y"
 { yyval.a_value = nextarg (yyvsp[-2].a_value, lookup (yyvsp[0].s_value,SIMPLE)); }
 break;
 case 58:
-#line 337 "bc.y"
+#line 335 "bc.y"
 { yyval.a_value = nextarg (yyvsp[-4].a_value, lookup (yyvsp[-2].s_value,ARRAY)); }
 break;
 case 59:
-#line 340 "bc.y"
+#line 338 "bc.y"
 { yyval.a_value = NULL; }
 break;
 case 61:
-#line 344 "bc.y"
+#line 342 "bc.y"
 {
 			      if (yyvsp[0].i_value > 1) warn ("comparison in argument");
 			      yyval.a_value = nextarg (NULL,0);
 			    }
 break;
 case 62:
-#line 349 "bc.y"
+#line 347 "bc.y"
 {
 			      sprintf (genstr, "K%d:", -lookup (yyvsp[-2].s_value,ARRAY));
 			      generate (genstr);
@@ -990,14 +990,14 @@ case 62:
 			    }
 break;
 case 63:
-#line 355 "bc.y"
+#line 353 "bc.y"
 {
 			      if (yyvsp[0].i_value > 1) warn ("comparison in argument");
 			      yyval.a_value = nextarg (yyvsp[-2].a_value,0);
 			    }
 break;
 case 64:
-#line 360 "bc.y"
+#line 358 "bc.y"
 {
 			      sprintf (genstr, "K%d:", -lookup (yyvsp[-2].s_value,ARRAY));
 			      generate (genstr);
@@ -1005,28 +1005,28 @@ case 64:
 			    }
 break;
 case 65:
-#line 367 "bc.y"
+#line 365 "bc.y"
 {
 			      yyval.i_value = -1;
 			      warn ("Missing expression in for statement");
 			    }
 break;
 case 67:
-#line 374 "bc.y"
+#line 372 "bc.y"
 {
 			      yyval.i_value = 0;
 			      generate ("0");
 			    }
 break;
 case 68:
-#line 379 "bc.y"
+#line 377 "bc.y"
 {
 			      if (yyvsp[0].i_value > 1)
 				warn ("comparison in return expresion");
 			    }
 break;
 case 69:
-#line 385 "bc.y"
+#line 383 "bc.y"
 {
 			      if (yyvsp[0].c_value != '=')
 				{
@@ -1039,7 +1039,7 @@ case 69:
 			    }
 break;
 case 70:
-#line 396 "bc.y"
+#line 394 "bc.y"
 {
 			      if (yyvsp[0].i_value > 1) warn("comparison in assignment");
 			      if (yyvsp[-2].c_value != '=')
@@ -1056,7 +1056,7 @@ case 70:
 			    }
 break;
 case 71:
-#line 412 "bc.y"
+#line 410 "bc.y"
 {
 			      warn("&& operator");
 			      yyvsp[0].i_value = next_label++;
@@ -1065,7 +1065,7 @@ case 71:
 			    }
 break;
 case 72:
-#line 419 "bc.y"
+#line 417 "bc.y"
 {
 			      sprintf (genstr, "DZ%d:p1N%d:", yyvsp[-2].i_value, yyvsp[-2].i_value);
 			      generate (genstr);
@@ -1073,7 +1073,7 @@ case 72:
 			    }
 break;
 case 73:
-#line 425 "bc.y"
+#line 423 "bc.y"
 {
 			      warn("|| operator");
 			      yyvsp[0].i_value = next_label++;
@@ -1082,7 +1082,7 @@ case 73:
 			    }
 break;
 case 74:
-#line 432 "bc.y"
+#line 430 "bc.y"
 {
 			      int tmplab;
 			      tmplab = next_label++;
@@ -1093,7 +1093,7 @@ case 74:
 			    }
 break;
 case 75:
-#line 441 "bc.y"
+#line 439 "bc.y"
 {
 			      yyval.i_value = yyvsp[0].i_value;
 			      warn("! operator");
@@ -1101,7 +1101,7 @@ case 75:
 			    }
 break;
 case 76:
-#line 447 "bc.y"
+#line 445 "bc.y"
 {
 			      yyval.i_value = 3;
 			      switch (*(yyvsp[-1].s_value))
@@ -1131,21 +1131,21 @@ case 76:
 			    }
 break;
 case 77:
-#line 475 "bc.y"
+#line 473 "bc.y"
 {
 			      generate ("+");
 			      yyval.i_value = yyvsp[-2].i_value | yyvsp[0].i_value;
 			    }
 break;
 case 78:
-#line 480 "bc.y"
+#line 478 "bc.y"
 {
 			      generate ("-");
 			      yyval.i_value = yyvsp[-2].i_value | yyvsp[0].i_value;
 			    }
 break;
 case 79:
-#line 485 "bc.y"
+#line 483 "bc.y"
 {
 			      genstr[0] = yyvsp[-1].c_value;
 			      genstr[1] = 0;
@@ -1154,21 +1154,21 @@ case 79:
 			    }
 break;
 case 80:
-#line 492 "bc.y"
+#line 490 "bc.y"
 {
 			      generate ("^");
 			      yyval.i_value = yyvsp[-2].i_value | yyvsp[0].i_value;
 			    }
 break;
 case 81:
-#line 497 "bc.y"
+#line 495 "bc.y"
 {
 			      generate ("n");
 			      yyval.i_value = yyvsp[0].i_value;
 			    }
 break;
 case 82:
-#line 502 "bc.y"
+#line 500 "bc.y"
 {
 			      yyval.i_value = 1;
 			      if (yyvsp[0].i_value < 0)
@@ -1179,7 +1179,7 @@ case 82:
 			    }
 break;
 case 83:
-#line 511 "bc.y"
+#line 509 "bc.y"
 {
 			      int len = strlen(yyvsp[0].s_value);
 			      yyval.i_value = 1;
@@ -1197,11 +1197,11 @@ case 83:
 			    }
 break;
 case 84:
-#line 527 "bc.y"
+#line 525 "bc.y"
 { yyval.i_value = yyvsp[-1].i_value | 1; }
 break;
 case 85:
-#line 529 "bc.y"
+#line 527 "bc.y"
 {
 			      yyval.i_value = 1;
 			      if (yyvsp[-1].a_value != NULL)
@@ -1219,7 +1219,7 @@ case 85:
 			    }
 break;
 case 86:
-#line 545 "bc.y"
+#line 543 "bc.y"
 {
 			      yyval.i_value = 1;
 			      if (yyvsp[0].i_value < 0)
@@ -1240,7 +1240,7 @@ case 86:
 			    }
 break;
 case 87:
-#line 564 "bc.y"
+#line 562 "bc.y"
 {
 			      yyval.i_value = 1;
 			      if (yyvsp[-1].i_value < 0)
@@ -1265,49 +1265,49 @@ case 87:
 			    }
 break;
 case 88:
-#line 587 "bc.y"
+#line 585 "bc.y"
 { generate ("cL"); yyval.i_value = 1;}
 break;
 case 89:
-#line 589 "bc.y"
+#line 587 "bc.y"
 { generate ("cR"); yyval.i_value = 1;}
 break;
 case 90:
-#line 591 "bc.y"
+#line 589 "bc.y"
 { generate ("cS"); yyval.i_value = 1;}
 break;
 case 91:
-#line 593 "bc.y"
+#line 591 "bc.y"
 {
 			      warn ("read function");
 			      generate ("cI"); yyval.i_value = 1;
 			    }
 break;
 case 92:
-#line 599 "bc.y"
+#line 597 "bc.y"
 { yyval.i_value = lookup(yyvsp[0].s_value,SIMPLE); }
 break;
 case 93:
-#line 601 "bc.y"
+#line 599 "bc.y"
 {
 			      if (yyvsp[-1].i_value > 1) warn("comparison in subscript");
 			      yyval.i_value = lookup(yyvsp[-3].s_value,ARRAY);
 			    }
 break;
 case 94:
-#line 606 "bc.y"
+#line 604 "bc.y"
 { yyval.i_value = 0; }
 break;
 case 95:
-#line 608 "bc.y"
+#line 606 "bc.y"
 { yyval.i_value = 1; }
 break;
 case 96:
-#line 610 "bc.y"
+#line 608 "bc.y"
 { yyval.i_value = 2; }
 break;
 case 97:
-#line 612 "bc.y"
+#line 610 "bc.y"
 { yyval.i_value = 3; }
 break;
 #line 1314 "y.tab.c"

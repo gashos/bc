@@ -2,7 +2,7 @@
 /* scan.l: the (f)lex description file for the scanner. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -128,14 +128,19 @@ limits return(Limits);
       }
 [a-z][a-z0-9_]* { yylval.s_value = strcopyof(yytext); return(NAME); }
 \"[^\"]*\"  {
- 	      char *look;
+ 	      unsigned char *look;
+	      int count = 0;
 	      yylval.s_value = strcopyof(yytext);
 	      for (look = yytext; *look != 0; look++)
-		if (*look == '\n') line_no++;
+		{
+		  if (*look == '\n') line_no++;
+		  if (*look == '"')  count++;
+		}
+	      if (count != 2) yyerror ("NUL character in string.");
 	      return(STRING);
 	    }
 {DIGIT}({DIGIT}|\\\n)*("."({DIGIT}|\\\n)*)?|"."(\\\n)*{DIGIT}({DIGIT}|\\\n)* {
-	      char *src, *dst;
+	      unsigned char *src, *dst;
 	      int len;
 	      /* remove a trailing decimal point. */
 	      len = strlen(yytext);
@@ -161,7 +166,15 @@ limits return(Limits);
 	      yylval.s_value = strcopyof(yytext); 
 	      return(NUMBER);
 	    }
-.       yyerror ("illegal character: %s",yytext);
+.       {
+	  if (yytext[0] < ' ')
+	    yyerror ("illegal character: ^%c",yytext[0] + '@');
+	  else
+	    if (yytext[0] > '~')
+	      yyerror ("illegal character: \\%3d", (int) yytext[0]);
+	    else
+	      yyerror ("illegal character: %s",yytext);
+	}
 %%
 
 

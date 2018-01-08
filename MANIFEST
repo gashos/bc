@@ -44,7 +44,7 @@
  proto.h                    2	
  sbc.y                      2	
  scan.c.dist                6	
- scan.l                     1	
+ scan.l                     2	
  storage.c                  4	
  util.c                     3	
  version.h                  1	

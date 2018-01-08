@@ -1,7 +1,7 @@
 /* const.h: Constants for bc. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@
 /* Define constants in some reasonable size.  The next 4 constants are
    POSIX constants. */
 
-#define BC_BASE_MAX       999	/* No good reason for this value. */
+#define BC_BASE_MAX   INT_MAX
 #define BC_SCALE_MAX  INT_MAX
 #define BC_STRING_MAX INT_MAX
 
@@ -57,7 +57,7 @@
 
 #define BC_LABEL_GROUP 64
 #define BC_LABEL_LOG    6
-#define BC_MAX_SEGS    10    /* Code segments. */
+#define BC_MAX_SEGS    16    /* Code segments. */
 #define BC_SEG_SIZE  1024
 #define BC_SEG_LOG     10
 

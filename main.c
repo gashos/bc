@@ -1,7 +1,7 @@
 /* main.c: The main program for bc.  */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ open_new_file ()
   if (is_std_in) return (FALSE);
 
   /* Open the other files. */
-  if (use_math)
+  if (use_math && first_file)
     {
 #ifdef BC_MATH_FILE
       /* Make the first file be the math library. */
@@ -137,7 +137,7 @@ open_new_file ()
 	{
 	  new_yy_file (new_file);
 	  return TRUE;
-	}
+	}	
       else
 	{
 	  fprintf (stderr, "Math Library unavailable.\n");

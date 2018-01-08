@@ -1,7 +1,7 @@
 /* load.c:  This code "loads" code into the code segments. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -54,10 +54,19 @@ addbyte (byte)
 {
   int seg, offset, func;
 
+  /* If there was an error, don't continue. */
+  if (had_error) return;
+
   /* Calculate the segment and offset. */
   seg = load_adr.pc_addr >> BC_SEG_LOG;
   offset = load_adr.pc_addr++ % BC_SEG_SIZE;
   func = load_adr.pc_func;
+
+  if (seg >= BC_MAX_SEGS)
+    {
+      yyerror ("Function too big.");
+      return;
+    }
 
   if (functions[func].f_body[seg] == NULL)
     functions[func].f_body[seg] = (char *) bc_malloc (BC_SEG_SIZE);
@@ -152,6 +161,9 @@ load_code (code)
   /* Scan the code. */
   while (*str != 0)
     {
+      /* If there was an error, don't continue. */
+      if (had_error) return;
+
       if (load_str)
 	{
 	  if (*str == '"') load_str = FALSE;
@@ -248,8 +260,7 @@ load_code (code)
 		break;
 		
 	      case ']':  /* A function end */
-		if (!had_error) 
-		  functions[load_adr.pc_func].f_defined = TRUE;
+		functions[load_adr.pc_func].f_defined = TRUE;
 		load_adr = save_adr;
 		break;
 

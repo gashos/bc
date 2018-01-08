@@ -163,14 +163,14 @@ int read();
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 
-#define YY_CHAR char
+#define YY_CHAR unsigned char
 # line 1 "scan.l"
 #define INITIAL 0
 # line 2 "scan.l"
 /* scan.l: the (f)lex description file for the scanner. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -329,7 +329,7 @@ static const short int yy_accept[144] =
        19,   18,    0
     } ;
 
-static const YY_CHAR yy_ec[128] =
+static const YY_CHAR yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -344,7 +344,21 @@ static const YY_CHAR yy_ec[128] =
 
        31,   32,   33,   34,   35,   36,   37,   38,   39,   40,
        41,   42,   43,   44,   45,   46,   47,   36,   48,   36,
-       49,   36,   50,   51,   52,    1,    1
+       49,   36,   50,   51,   52,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1
     } ;
 
 static const YY_CHAR yy_meta[53] =
@@ -760,17 +774,22 @@ case 35:
 case 36:
 # line 130 "scan.l"
 {
- 	      char *look;
+ 	      unsigned char *look;
+	      int count = 0;
 	      yylval.s_value = strcopyof(yytext);
 	      for (look = yytext; *look != 0; look++)
-		if (*look == '\n') line_no++;
+		{
+		  if (*look == '\n') line_no++;
+		  if (*look == '"')  count++;
+		}
+	      if (count != 2) yyerror ("NUL character in string.");
 	      return(STRING);
 	    }
 	YY_BREAK
 case 37:
-# line 137 "scan.l"
+# line 142 "scan.l"
 {
-	      char *src, *dst;
+	      unsigned char *src, *dst;
 	      int len;
 	      /* remove a trailing decimal point. */
 	      len = strlen(yytext);
@@ -798,11 +817,19 @@ case 37:
 	    }
 	YY_BREAK
 case 38:
-# line 164 "scan.l"
-yyerror ("illegal character: %s",yytext);
+# line 169 "scan.l"
+{
+	  if (yytext[0] < ' ')
+	    yyerror ("illegal character: ^%c",yytext[0] + '@');
+	  else
+	    if (yytext[0] > '~')
+	      yyerror ("illegal character: \\%3d", (int) yytext[0]);
+	    else
+	      yyerror ("illegal character: %s",yytext);
+	}
 	YY_BREAK
 case 39:
-# line 165 "scan.l"
+# line 178 "scan.l"
 ECHO;
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
@@ -1072,7 +1099,7 @@ register yy_state_type yy_current_state;
 	    yy_c = yy_meta[yy_c];
 	}
     yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-    yy_is_jam = (yy_base[yy_current_state] == 194);
+    yy_is_jam = (yy_current_state == 143);
 
     return ( yy_is_jam ? 0 : yy_current_state );
     }
@@ -1326,7 +1353,7 @@ FILE *file;
 
     b->yy_eof_status = EOF_NOT_SEEN;
     }
-# line 165 "scan.l"
+# line 178 "scan.l"
 
 
 

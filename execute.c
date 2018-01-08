@@ -1,7 +1,7 @@
 /* execute.c - run a bc program. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,23 +28,21 @@
 
 #include "bcdefs.h"
 #include <signal.h>
-#include <setjmp.h>
 #include "global.h"
 #include "proto.h"
 
-/* Local variable for SIGINT interrupt of an execution. */
-static jmp_buf env;
-
 
 /* The SIGINT interrupt handling routine. */
+
+int had_sigint;
 
 void
 stop_execution (sig)
      int sig;
 {
+  had_sigint = TRUE;
   printf ("\n");
   rt_error ("interrupted execution");
-  longjmp (env, 1);     /* Jump to the main code. */
 }
 
 
@@ -87,8 +85,10 @@ execute ()
 
   /* Set up the interrupt mechanism for an interactive session. */
   if (interactive)
-    if (setjmp (env) == 0)
+    {
       signal (SIGINT, stop_execution);
+      had_sigint = FALSE;
+    }
    
   while (pc.pc_addr < functions[pc.pc_func].f_code_size && !runtime_error)
     {
@@ -522,10 +522,6 @@ execute ()
       }
     }
 
-  /* Clean up the interrupt stuff. */
-  if (interactive)
-    signal (SIGINT, use_quit);
-
   /* Clean up the function stack and pop all autos/parameters. */
   while (pc.pc_func != 0)
     {
@@ -539,6 +535,13 @@ execute ()
   /* Clean up the execution stack. */ 
   while (ex_stack != NULL) pop();
 
+  /* Clean up the interrupt stuff. */
+  if (interactive)
+    {
+      signal (SIGINT, use_quit);
+      if (had_sigint)
+	printf ("Interruption completed.\n");
+    }
 }
 
 

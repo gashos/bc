@@ -6,8 +6,10 @@
 #
 #  LIBDIR and BINDIR are where bc and libmath.b will be put.
 #
-LIBDIR = /usr/local/lib
-BINDIR = /usr/local/bin
+PREFIX = /usr/local
+LIBDIR = $(PREFIX)/lib
+BINDIR = $(PREFIX)/bin
+MANDIR = $(PREFIX)/man/man1
 #
 #  INCLUDE is the directory from where header files are included.
 #
@@ -22,7 +24,8 @@ LIBFILE = $(LIBDIR)/libmath.b
 #
 SHELL = /bin/sh
 YACC = yacc
-LEX = flex -I
+#YACC = bison -y
+LEX = flex -I8
 #LEX = lex
 CC = cc
 UUENCODE = uue
@@ -64,7 +67,7 @@ EXTRAFILES = bc.c.dist scan.c.dist y.tab.h.dist
 
 
 all: bc
-bc: config.h bc.$O $(OFILES) global.$O
+bc: $& config.h bc.$O $(OFILES) global.$O
 	$(CC) -o bc $(LDFLAGS) bc.$O $(OFILES) global.$O
 
 sbc: sbc.$O $(OFILES) global.$O
@@ -90,6 +93,7 @@ install : bc libmath.b config.h
 	chmod 555 $(BINDIR)/bc
 	if grep -s BC_MATH_FILE config.h; then rm -f $(LIBDIR)/libmath.b; \
 	cp libmath.b $(LIBDIR); chmod 444 $(LIBDIR)/libmath.b; else true; fi
+	cp bc.1 $(MANDIR)
 
 dist: $(EXTRAFILES)
 	OF=`sed -n 's/.*\([0-9][0-9]*\.[0-9][0-9]*\).*/bc-\1/p' version.h` \

@@ -3,7 +3,7 @@
          extensions to the language. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -86,10 +86,8 @@
 %type <c_value> '+' '-' 
 %type <a_value> opt_parameter_list opt_auto_define_list define_list
 %type <a_value> opt_argument_list argument_list
-%type <s_value> NAME STRING NUMBER
 %type <i_value> program input_item semicolon_list statement_list
 %type <i_value> statement function   statement_or_error
-%type <i_value> NEWLINE AND OR NOT
 
 /* precedence */
 %left OR

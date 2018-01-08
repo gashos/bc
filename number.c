@@ -1,7 +1,7 @@
 /* number.c: Implements arbitrary precision numbers. */
 
 /*  This file is part of bc written for MINIX.
-    Copyright (C) 1991 Free Software Foundation, Inc.
+    Copyright (C) 1991, 1992 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1161,7 +1161,7 @@ out_num (num, o_base, out_char)
   char *nptr;
   int  index, fdigit, pre_space;
   stk_rec *digits, *temp;
-  bc_num int_part, frac_part, base, cur_dig, t_num;
+  bc_num int_part, frac_part, base, cur_dig, t_num, max_o_digit;
 
   /* The negative sign if needed. */
   if (num->n_sign == MINUS) (*out_char) ('-');
@@ -1199,6 +1199,9 @@ out_num (num, o_base, out_char)
 	init_num (&base);
 	bc_sub (num, int_part, &frac_part);
 	int2num (&base, o_base);
+	init_num (&max_o_digit);
+	int2num (&max_o_digit, o_base-1);
+
 
 	/* Get the digits of the integer part and push them on a stack. */
 	while (!is_zero (int_part))
@@ -1223,7 +1226,7 @@ out_num (num, o_base, out_char)
 		if (o_base <= 16) 
 		  (*out_char) (ref_str[ (int) temp->digit]);
 		else
-		  out_long (temp->digit, base->n_len, 1, out_char);
+		  out_long (temp->digit, max_o_digit->n_len, 1, out_char);
 		free (temp);
 	      }
 	  }
@@ -1242,7 +1245,7 @@ out_num (num, o_base, out_char)
 	      if (o_base <= 16)
 		(*out_char) (ref_str[fdigit]);
 	      else {
-		out_long (fdigit, base->n_len, pre_space, out_char);
+		out_long (fdigit, max_o_digit->n_len, pre_space, out_char);
 		pre_space = 1;
 	      }
 	      bc_multiply (t_num, base, &t_num, 0);
